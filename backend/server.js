@@ -23,6 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // mount routes to middleware express function - everytime a url hits check its route
 app.use("/api/goals", require("./routes/goalRoutes"));
+app.use("/api/users", require("./routes/userRoutes"));
 
 // middleware for handling errors
 app.use(errorHandler);
