@@ -9,6 +9,7 @@ const { errorHandler } = require("./middleware/errorMiddleware");
 
 const connectDB = require("./config/db");
 
+// start connection to MondoDB database
 connectDB();
 
 const port = process.env.PORT || 5000;
