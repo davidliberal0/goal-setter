@@ -1,10 +1,15 @@
 // import express
 const express = require("express");
+const colors = require("colors");
 // import dotenv for environment variable configuration
 const dotenv = require("dotenv").config();
 
 // import middleware error handler
 const { errorHandler } = require("./middleware/errorMiddleware");
+
+const connectDB = require("./config/db");
+
+connectDB();
 
 const port = process.env.PORT || 5000;
 
