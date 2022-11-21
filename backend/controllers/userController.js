@@ -40,6 +40,7 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user.id,
       name: user.name,
       email: user.email,
+      token: generateToken(user.id), // generate a signed token with the user id
     });
   } else {
     res.status(400);
@@ -58,7 +59,12 @@ const loginUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user && (await bcrypt.compare(password, user.password))) {
-    res.json({ _id: user.id, name: user.name, email: user.email });
+    res.json({
+      _id: user.id,
+      name: user.name,
+      email: user.email,
+      token: generateToken(user.id), // generate a signed token with the user id at the time of login
+    });
   } else {
     res.status(400);
     throw new Error("Invalid credentials");
@@ -71,6 +77,15 @@ const loginUser = asyncHandler(async (req, res) => {
 const getMe = asyncHandler(async (req, res) => {
   res.json({ message: `User data display` });
 });
+
+// Generate a JWT
+// signs a new token with the passed in id using the signature
+// will expire in 30 days
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: "30d",
+  });
+};
 
 module.exports = {
   registerUser,
