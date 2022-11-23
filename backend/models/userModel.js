@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// User Schema - defines how user information will be stored
 const userSchema = mongoose.Schema(
   {
     name: {

@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const asyncHandler = require("express-async-handler");
+const bcrypt = require("bcryptjs"); // password encryption
+const asyncHandler = require("express-async-handler"); // handles errors w/o try & catch
 const User = require("../models/userModel");
 
 // @desc Register new user
@@ -18,6 +18,7 @@ const registerUser = asyncHandler(async (req, res) => {
   // check if user exists
   const userExists = await User.findOne({ email });
 
+  // user tries to register a user that already exists
   if (userExists) {
     res.status(400);
     throw new Error("User already exists");
@@ -34,7 +35,7 @@ const registerUser = asyncHandler(async (req, res) => {
     password: hashedPassword,
   });
 
-  // check if user was created
+  // check if user was created - return JSON data of user
   if (user) {
     res.status(201).json({
       _id: user.id,
@@ -58,6 +59,7 @@ const loginUser = asyncHandler(async (req, res) => {
   //check for user email
   const user = await User.findOne({ email });
 
+  // if the user and the password matches the user's password - return JSON
   if (user && (await bcrypt.compare(password, user.password))) {
     res.json({
       _id: user.id,
@@ -66,6 +68,7 @@ const loginUser = asyncHandler(async (req, res) => {
       token: generateToken(user.id), // generate a signed token with the user id at the time of login
     });
   } else {
+    // no match return error
     res.status(400);
     throw new Error("Invalid credentials");
   }

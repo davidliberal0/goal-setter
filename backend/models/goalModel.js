@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// Goal Schema - defines how goals for each user will be stored
 const goalSchema = mongoose.Schema(
   {
     user: {
