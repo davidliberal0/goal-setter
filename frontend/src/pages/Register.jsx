@@ -22,12 +22,14 @@ function Register() {
   const dispatch = useDispatch();
 
   const { user, isError, isSuccess, isLoading, message } = useSelector(
-    (state) => state.auth
+    (state) => {
+      return state.auth;
+    }
   );
 
   useEffect(() => {
     if (isError) {
-      toast.error("message");
+      toast.error(message);
     }
 
     if (isSuccess || user) {
@@ -47,17 +49,17 @@ function Register() {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    console.log(name, email, password, passwordTwo);
 
     if (password !== passwordTwo) {
       toast.error("passwords do not match");
     } else {
       // if passwords match, register user
       const userData = {
-        user,
+        name,
         email,
         password,
       };
-
       // dispatch or call the register function
       dispatch(register(userData));
     }
