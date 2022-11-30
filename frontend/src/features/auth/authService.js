@@ -20,9 +20,15 @@ const register = async (userData) => {
   return response.data;
 };
 
+// Logout User
+const logout = () => {
+  localStorage.removeItem("user");
+};
+
 // functions to be exported
 const authService = {
   register,
+  logout,
 };
 
 // export
