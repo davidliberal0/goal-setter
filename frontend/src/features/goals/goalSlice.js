@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import authSlice from "../auth/authSlice";
 
 // define intial application state
 const initialState = {
@@ -15,7 +14,9 @@ export const goalSlice = createSlice({
   initialState,
   // functions that define logic for chaning goal state
   reducers: {
-    reset: (state) => initialState,
+    reset: (state) => {
+      return initialState;
+    },
   },
 });
 
